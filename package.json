@@ -2,6 +2,9 @@
   "name": "najmti",
   "version": "0.1.0",
   "private": true,
+  "license": "MIT",
+  "description": "Najmti is a web application that provides a platform for users to create and manage their own personal websites. github: https://github.com/HassanMostafaa/najmti",
+  "author": "Hassan Mohamed",
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",

@@ -5,3 +5,8 @@ body {
   background: $background;
   color: $foreground;
 }
+.contain {
+  max-width: 1440px;
+  margin-inline: auto;
+  width: 90%;
+}

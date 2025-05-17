@@ -1,6 +1,10 @@
-@import "tailwindcss";
-
 body {
   background: #f4f4f4;
   color: #333;
-} /*# sourceMappingURL=global.css.map */
+}
+
+.contain {
+  max-width: 1440px;
+  margin-inline: auto;
+  width: 90%;
+}/*# sourceMappingURL=global.css.map */

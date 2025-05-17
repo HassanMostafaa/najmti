@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Nunito } from "next/font/google";
 import "../styles/global.css";
+import "../styles/tailwindConfigs.css";
 import { LayoutComponent } from "@/components/base-components/layout-component/LayoutComponent";
 
 const geistSans = Nunito({
