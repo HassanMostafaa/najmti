@@ -1,0 +1,67 @@
+{
+  // Live Sass Compiler
+  "liveSassCompile.settings.watchOnLaunch": true,
+  "liveSassCompile.settings.formats": [
+    {
+      "format": "expanded",
+      "extensionName": ".css",
+      "savePath": null
+    },
+    {
+      "format": "compressed",
+      "extensionName": ".min.css",
+      "savePath": null
+    }
+  ],
+  "liveSassCompile.settings.excludeList": [
+    "/**/node_modules/**",
+    "/.vscode/**"
+  ],
+
+  // Font: Fira Code with ligatures
+  "editor.fontFamily": "'Fira Code', Consolas, 'Courier New', monospace",
+  "editor.fontLigatures": true,
+
+  // Smooth cursor, blinking, and expanded look
+  "editor.cursorSmoothCaretAnimation": "on",
+  "editor.cursorBlinking": "expand", // Animates line growing/shrinking
+  "editor.cursorStyle": "line",
+  "editor.cursorWidth": 1, // Thicker line to simulate "expanded" look
+
+  // Smooth transitions & visuals
+  "editor.smoothScrolling": true,
+  "workbench.colorTheme": "Default Dark+",
+  "editor.minimap.enabled": true,
+  "editor.renderWhitespace": "selection",
+  "editor.renderControlCharacters": false,
+
+  // Scrolling experience
+  "editor.scrollBeyondLastLine": true,
+  "editor.scrollPredominantAxis": true,
+  "editor.mouseWheelScrollSensitivity": 1.2,
+  "editor.fastScrollSensitivity": 3,
+
+  // Suggestion improvements
+  "editor.suggestSelection": "first",
+  "editor.tabCompletion": "on",
+
+  // Intuitive code navigation
+  "editor.gotoLocation.multipleDefinitions": "peek",
+  "editor.gotoLocation.multipleImplementations": "peek",
+
+  // Code folding
+  "editor.folding": true,
+  "editor.foldingHighlight": true,
+  "editor.foldingStrategy": "auto",
+
+  // Bracket and tag pair colorization
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": "active",
+  "editor.guides.indentation": true,
+  "editor.guides.highlightActiveIndentation": true,
+
+  // Clean UI
+  "workbench.statusBar.visible": true,
+  "breadcrumbs.enabled": true,
+  "workbench.activityBar.visible": true
+}
