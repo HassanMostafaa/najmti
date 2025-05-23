@@ -1,7 +1,10 @@
+"use client";
+// import { useSessionStore } from "@/stores/useSessionStore";
 import Link from "next/link";
 import React from "react";
 
 export const HeaderNavigation = () => {
+  // const { session } = useSessionStore();
   return (
     <div className="contain flex justify-between border-b border-neutral-300 items-center py-8">
       <div className="font-bold text-xl">NAJMTI</div>

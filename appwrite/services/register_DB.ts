@@ -4,7 +4,7 @@ import { Account, ID } from "appwrite";
 
 const account = new Account(client);
 
-export async function registerUserDB(
+export async function registerUser_DB(
   email: string,
   password: string,
   name: string

@@ -1,6 +1,6 @@
 // app/api/register/route.ts
 
-import { registerUserDB } from "@/appwrite/services/registerDB";
+import { registerUser_DB } from "@/appwrite/services/register_DB";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
@@ -16,7 +16,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const result = await registerUserDB(email, password, name);
+    const result = await registerUser_DB(email, password, name);
 
     if (!result.success) {
       return NextResponse.json(
