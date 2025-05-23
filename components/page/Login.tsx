@@ -2,15 +2,18 @@
 "use client";
 import { InternalEndpointLoginRequest } from "@/services/internal-requests/InternalEndpointLoginRequest";
 import { useSessionStore } from "@/stores/useSessionStore";
-import React, { useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
+import { redirect } from "next/navigation";
+import { parse } from "@/lib/helper";
 
 export default function Login() {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  const { login: storeLogin } = useSessionStore.getState();
+  const { loginWithAppwrite, session } = useSessionStore();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -18,17 +21,33 @@ export default function Login() {
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    setIsLoading(true);
     e.preventDefault();
     setError(null);
     const response = await InternalEndpointLoginRequest(formData);
-    const session = response?.data?.loginResponse;
-    console.log("response", response);
-    if (response?.status === 200) {
-      storeLogin(session);
+    console.log("response client fn response", { response });
+    if (response?.session?.$id) {
+      loginWithAppwrite({
+        session: response.session,
+        currentUser: response.currentUser,
+      });
     } else {
-      setError(JSON.parse(response?.response?.data?.message)?.message);
+      setError(parse(response?.response)?.message);
     }
+    setIsLoading(false);
   };
+
+  useLayoutEffect(() => {
+    const session = localStorage.getItem("user-session-store");
+
+    if (session) {
+      const parsedSession = JSON.parse(session);
+      if (parsedSession?.state?.session?.$id) {
+        redirect(`/`); // Navigate to the new post page
+      }
+    }
+  }, [session]);
+  // Check if the user is already logged in
 
   return (
     <div className="py-10 contain">
@@ -59,7 +78,7 @@ export default function Login() {
         {/* Right Column with Form */}
         <form
           onSubmit={handleSubmit}
-          className="w-full p-8 border border-gray-300"
+          className="w-full p-3 md:p-6 border border-gray-300"
         >
           <h2 className="text-2xl font-bold mb-6 text-gray-800">Login</h2>
 
@@ -109,15 +128,16 @@ export default function Login() {
 
           <button
             type="submit"
+            disabled={isLoading}
             className="w-full bg-neutral-600 text-white py-2 hover:bg-neutral-700 transition-colors duration-200"
           >
-            Login
+            {isLoading ? "Logging in..." : "Login"}
           </button>
 
           <p className="mt-6 text-sm text-gray-600">
             Don’t have an account?{" "}
             <a
-              href="/signup"
+              href="/register"
               className="text-neutral-700 font-medium hover:underline"
             >
               Sign up

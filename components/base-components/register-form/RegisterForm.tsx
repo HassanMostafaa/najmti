@@ -4,7 +4,6 @@ import { useMutation } from "react-query";
 import axios from "axios";
 import { registerUser } from "./registerHelper";
 import { InputField } from "./InputField"; // adjust path as needed
-import { loginWithEmail } from "@/services/appwrite-login";
 
 export const RegisterForm = () => {
   const [formError, setFormError] = useState<string | null>(null);
@@ -22,10 +21,7 @@ export const RegisterForm = () => {
     mutationFn: registerUser,
     onSuccess: () => {
       setSuccessMessage("Registration successful!");
-      loginWithEmail(email, password).then((res) => {
-        console.log("Login successful:", { res });
-        // Handle successful login, e.g., redirect or show a message
-      });
+
       setFormError(null);
       // clearFields();
     },

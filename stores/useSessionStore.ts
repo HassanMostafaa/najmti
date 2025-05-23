@@ -2,8 +2,8 @@ import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 
-// Session type (based on the object you provided)
-export type Session = {
+// Full Appwrite user and session types
+type Session = {
   $id: string;
   $createdAt: string;
   $updatedAt: string;
@@ -35,17 +35,33 @@ export type Session = {
   mfaUpdatedAt: string;
 };
 
-// Store interface
-interface SessionState {
-  session: Session | null;
-  isLoggedIn: boolean;
+type CurrentUser = {
+  $id: string;
+  name: string;
+  email: string;
+};
 
-  login: (session: Session) => void;
+interface User {
+  id: string;
+  email: string;
+  name?: string;
+}
+
+interface SessionState {
+  user: User | null;
+  token: string | null;
+  session: Session | null;
+  isLoggedIn: boolean | null;
+
+  loginWithAppwrite: (data: {
+    session: Session;
+    currentUser: CurrentUser;
+  }) => void;
+
   logout: () => void;
   clearSession: () => void;
 }
 
-// Zustand store
 export const useSessionStore = create<SessionState>()(
   devtools(
     persist(
@@ -53,37 +69,49 @@ export const useSessionStore = create<SessionState>()(
         user: null,
         token: null,
         session: null,
-        isLoggedIn: false,
+        isLoggedIn: null,
 
-        login: (session) =>
+        loginWithAppwrite: ({ session, currentUser }) =>
           set((state) => {
+            state.user = {
+              id: currentUser.$id,
+              email: currentUser.email,
+              name: currentUser.name,
+            };
+            state.token = session.$id; // You may use it if needed
             state.session = session;
             state.isLoggedIn = true;
           }),
 
         logout: () =>
           set((state) => {
+            state.user = null;
+            state.token = null;
             state.session = null;
             state.isLoggedIn = false;
           }),
 
         clearSession: () =>
           set((state) => {
+            state.user = null;
+            state.token = null;
             state.session = null;
             state.isLoggedIn = false;
           }),
       })),
       {
-        name: "user-session-store", // localStorage key
+        name: "user-session-store",
         version: 1,
         partialize: (state) => ({
+          user: state.user,
+          token: state.token,
           session: state.session,
           isLoggedIn: state.isLoggedIn,
         }),
       }
     ),
     {
-      name: "useSessionStore", // Devtools label
+      name: "useSessionStore",
     }
   )
 );

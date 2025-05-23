@@ -3,6 +3,7 @@ import { Nunito } from "next/font/google";
 import "../styles/global.css";
 import "../styles/tailwindConfigs.css";
 import { LayoutComponent } from "@/components/base-components/layout-component/LayoutComponent";
+import Image from "next/image";
 
 const geistSans = Nunito({
   subsets: ["latin"],
@@ -12,6 +13,11 @@ const geistSans = Nunito({
 export const metadata: Metadata = {
   title: "NAJMTI",
   description: "App created by Hassan for my lovely wife",
+  icons: {
+    icon: "/assets/logo-square-fav.png",
+    shortcut: "/assets/logo-square-fav.png",
+    apple: "/assets/logo-square-fav.png",
+  },
 };
 
 export default function RootLayout({
