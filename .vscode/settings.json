@@ -62,6 +62,5 @@
 
   // Clean UI
   "workbench.statusBar.visible": true,
-  "breadcrumbs.enabled": true,
-  "workbench.activityBar.visible": true
+  "breadcrumbs.enabled": true
 }

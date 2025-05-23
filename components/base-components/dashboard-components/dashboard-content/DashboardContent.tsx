@@ -1,5 +1,14 @@
+"use client";
+import { useDashboardStore } from "@/stores/useDashboardStore";
 import React from "react";
+import { DashboardUsers } from "./DashboardUsers";
 
 export const DashboardContent = () => {
-  return <div className="w-3/4 max-md:w-full border">DashboardContent</div>;
+  const { selectedTab } = useDashboardStore();
+
+  return (
+    <div className="w-3/4 max-md:w-full">
+      {selectedTab?.tab === "users" && <DashboardUsers />}
+    </div>
+  );
 };

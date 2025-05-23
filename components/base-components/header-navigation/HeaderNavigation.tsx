@@ -8,6 +8,8 @@ export const HeaderNavigation = () => {
       <div className="flex gap-8 text-sm">
         <Link href="/">Home</Link>
         <Link href="/admin-dashboard">Dashboard</Link>
+        <Link href="/login">Login</Link>
+        <Link href="/sign-up">Register</Link>
       </div>
     </div>
   );
