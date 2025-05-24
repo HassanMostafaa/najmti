@@ -74,7 +74,7 @@ export const Home = () => {
 
       <div className="bg-gradient-to-r from-sky-600 to-indigo-600 p-8 shadow-lg max-w-xl mx-auto text-white">
         <h2 className="text-2xl font-bold mb-3">
-          ♥️ A to my little Najma, my everything
+          ♥️ To my little Najma, my everything
         </h2>
         <p>
           Thoughtfully designed with a modern flair, this app captures our
