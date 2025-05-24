@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { InternalEndpointLoginRequest } from "@/services/internal-requests/InternalEndpointLoginRequest";
 import { useSessionStore } from "@/stores/useSessionStore";
