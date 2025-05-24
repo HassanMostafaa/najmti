@@ -25,7 +25,6 @@ export default function Login() {
     e.preventDefault();
     setError(null);
     const response = await InternalEndpointLoginRequest(formData);
-    console.log("response client fn response", { response });
     if (response?.session?.$id) {
       loginWithAppwrite({
         session: response.session,

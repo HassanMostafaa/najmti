@@ -4,6 +4,7 @@ import { useSessionStore } from "@/stores/useSessionStore";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { useRouter } from "next/navigation";
 
 // Import Heroicons
 import {
@@ -17,6 +18,7 @@ import {
 export const HeaderNavigation = () => {
   const { user, session, isLoggedIn, logout, clearSession } = useSessionStore();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
+  const router = useRouter();
 
   const handleLogout = async () => {
     try {
@@ -27,6 +29,8 @@ export const HeaderNavigation = () => {
         console.log("Session deleted:", delSessionResponse);
         logout();
         clearSession();
+        // nextjs redirect
+        router.push("/login");
       }
     } catch (error) {
       console.error("Logout failed:", error);
@@ -42,12 +46,6 @@ export const HeaderNavigation = () => {
   const closeMobileMenu = () => {
     setIsMobileMenuOpen(false);
   };
-
-  React.useEffect(() => {
-    console.log("User:", user);
-    console.log("Session:", session);
-    console.log("Is Logged In:", isLoggedIn);
-  }, [user, session, isLoggedIn]);
 
   // Close mobile menu when clicking outside
   React.useEffect(() => {
@@ -109,7 +107,10 @@ export const HeaderNavigation = () => {
             </Link>
           )}
           {isLoggedIn && session && (
-            <div className="relative bg-neutral-700 group text-white px-4 py-2">
+            <Link
+              href="/profile"
+              className="relative bg-neutral-700 group text-white px-4 py-2"
+            >
               {user?.name}
               <div className="absolute top-full p-3 group-hover:opacity-100 opacity-0 group-hover:pointer-events-auto pointer-events-none left-0 w-full bg-neutral-200 text-neutral-800 transition-all duration-200">
                 <div
@@ -119,7 +120,7 @@ export const HeaderNavigation = () => {
                   Logout
                 </div>
               </div>
-            </div>
+            </Link>
           )}
         </div>
 
