@@ -60,6 +60,15 @@ export const HeaderNavigation = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isMobileMenuOpen]);
 
+  // check if user is logged in session and localStorage
+  React.useEffect(() => {
+    if (localStorage.getItem("user-session-store") && session?.$id) {
+      logout();
+      clearSession();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [session]);
+
   return (
     <>
       <div className="contain flex justify-between border-b border-neutral-300 items-center py-2 relative">
