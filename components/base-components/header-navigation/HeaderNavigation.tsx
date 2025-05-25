@@ -62,7 +62,7 @@ export const HeaderNavigation = () => {
 
   // check if user is logged in session and localStorage
   React.useEffect(() => {
-    if (localStorage.getItem("user-session-store") && session?.$id) {
+    if (!localStorage.getItem("user-session-store") && !session?.$id) {
       logout();
       clearSession();
     }
