@@ -31,7 +31,7 @@ export const Home = () => {
       </div>
 
       <div className="grid sm:grid-cols-2 gap-8">
-        <div className="bg-white shadow-md p-6 border border-gray-200 hover:shadow-lg transition-shadow duration-300">
+        <div className="bg-white shadow-md p-6 border rounded border-gray-200 hover:shadow-lg transition-shadow duration-300">
           <h2 className="text-xl font-semibold text-sky-600 mb-3">
             ✨ Shared Moments
           </h2>
@@ -41,7 +41,7 @@ export const Home = () => {
           </p>
         </div>
 
-        <div className="bg-white shadow-md p-6 border border-gray-200 hover:shadow-lg transition-shadow duration-300">
+        <div className="bg-white shadow-md p-6 rounded border border-gray-200 hover:shadow-lg transition-shadow duration-300">
           <h2 className="text-xl font-semibold text-sky-600 mb-3">
             💬 Private Chat
           </h2>
@@ -51,7 +51,7 @@ export const Home = () => {
           </p>
         </div>
 
-        <div className="bg-white shadow-md p-6 border border-gray-200 hover:shadow-lg transition-shadow duration-300">
+        <div className="bg-white shadow-md p-6 rounded border border-gray-200 hover:shadow-lg transition-shadow duration-300">
           <h2 className="text-xl font-semibold text-sky-600 mb-3">
             📷 Gallery
           </h2>
@@ -61,7 +61,7 @@ export const Home = () => {
           </p>
         </div>
 
-        <div className="bg-white  shadow-md p-6 border border-gray-200 hover:shadow-lg transition-shadow duration-300">
+        <div className="bg-white  shadow-md p-6 rounded border border-gray-200 hover:shadow-lg transition-shadow duration-300">
           <h2 className="text-xl font-semibold text-sky-600 mb-3">
             🤝 Just Us
           </h2>
@@ -72,7 +72,7 @@ export const Home = () => {
         </div>
       </div>
 
-      <div className="bg-gradient-to-r from-sky-600 to-indigo-600 p-8 shadow-lg max-w-xl mx-auto text-white">
+      <div className="bg-gradient-to-r from-sky-600 rounded to-indigo-600 p-8 shadow-lg max-w-xl mx-auto text-white">
         <h2 className="text-2xl font-bold mb-3">
           ♥️ To my little Najma, my everything
         </h2>

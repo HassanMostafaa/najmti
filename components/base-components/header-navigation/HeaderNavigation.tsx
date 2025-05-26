@@ -8,10 +8,11 @@ import { useRouter } from "next/navigation";
 
 // Import Heroicons
 import {
-  HomeIcon,
+  FireIcon,
   PencilSquareIcon,
   ArrowRightOnRectangleIcon,
   LockClosedIcon,
+  HomeIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 
@@ -96,21 +97,29 @@ export const HeaderNavigation = () => {
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-8 text-sm">
           <Link
+            href="/feed"
+            className="hover:text-neutral-600 hover:underline transition-colors duration-200"
+          >
+            Feed
+          </Link>
+          <Link
             href="/"
             className="hover:text-neutral-600 hover:underline transition-colors duration-200"
           >
             Home
           </Link>
-          <Link
-            href="/register"
-            className="hover:text-neutral-600 hover:underline transition-colors duration-200"
-          >
-            Register
-          </Link>
+          {isLoggedIn === false && (
+            <Link
+              href="/register"
+              className="hover:text-neutral-600 hover:underline transition-colors duration-200"
+            >
+              Register
+            </Link>
+          )}
           {isLoggedIn === false && (
             <Link
               href="/login"
-              className="bg-neutral-700 hover:bg-neutral-800 text-white px-4 py-2 transition-colors duration-200"
+              className="bg-neutral-700 rounded hover:bg-neutral-800 text-white px-4 py-2 transition-colors duration-200"
             >
               Login
             </Link>
@@ -118,10 +127,10 @@ export const HeaderNavigation = () => {
           {isLoggedIn && session && (
             <Link
               href="/profile"
-              className="relative bg-neutral-700 group text-white px-4 py-2"
+              className="relative rounded bg-neutral-700 group text-white px-4 py-2"
             >
               {user?.name}
-              <div className="absolute top-full p-3 group-hover:opacity-100 opacity-0 group-hover:pointer-events-auto pointer-events-none left-0 w-full bg-neutral-200 text-neutral-800 transition-all duration-200">
+              <div className="absolute rounded top-full p-3 group-hover:opacity-100 opacity-0 group-hover:pointer-events-auto pointer-events-none left-0 w-full bg-neutral-200 text-neutral-800 transition-all duration-200">
                 <div
                   className="hover:underline cursor-pointer"
                   onClick={handleLogout}
@@ -205,6 +214,14 @@ export const HeaderNavigation = () => {
 
           <div className="space-y-2">
             <Link
+              href="/feed"
+              onClick={closeMobileMenu}
+              className="flex items-center gap-2 px-4 py-3 hover:underline rounded-lg hover:bg-neutral-100 transition-colors duration-200 text-neutral-700 font-medium"
+            >
+              <FireIcon className="w-5 h-5" />
+              Feed
+            </Link>
+            <Link
               href="/"
               onClick={closeMobileMenu}
               className="flex items-center gap-2 px-4 py-3 hover:underline rounded-lg hover:bg-neutral-100 transition-colors duration-200 text-neutral-700 font-medium"
@@ -213,14 +230,16 @@ export const HeaderNavigation = () => {
               Home
             </Link>
 
-            <Link
-              href="/register"
-              onClick={closeMobileMenu}
-              className="flex items-center gap-2 px-4 py-3 hover:underline rounded-lg hover:bg-neutral-100 transition-colors duration-200 text-neutral-700 font-medium"
-            >
-              <PencilSquareIcon className="w-5 h-5" />
-              Register
-            </Link>
+            {isLoggedIn === false && (
+              <Link
+                href="/register"
+                onClick={closeMobileMenu}
+                className="flex items-center gap-2 px-4 py-3 hover:underline rounded-lg hover:bg-neutral-100 transition-colors duration-200 text-neutral-700 font-medium"
+              >
+                <PencilSquareIcon className="w-5 h-5" />
+                Register
+              </Link>
+            )}
 
             {isLoggedIn === false && (
               <Link
