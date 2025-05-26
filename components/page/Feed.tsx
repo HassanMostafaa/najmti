@@ -1,5 +1,4 @@
 "use client";
-import { PlusCircleIcon } from "@heroicons/react/24/outline";
 import React from "react";
 import { CreatePostModal } from "../base-components/create-post-modal/CreatePostModal";
 import { CreatePostFloatingButton } from "../base-components/create-post-floating-button/CreatePostFloatingButton";
