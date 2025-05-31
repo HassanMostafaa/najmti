@@ -6,7 +6,6 @@ export const registerUser = async (form: {
   password: string;
   fullName: string;
 }) => {
-  console.log("Registering user with form data:", form);
   const response = await axios.post("/api/register", form);
   return response.data;
 };

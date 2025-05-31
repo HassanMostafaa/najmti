@@ -4,6 +4,7 @@ import { useSessionStore } from "@/stores/useSessionStore";
 import React, { useLayoutEffect, useState } from "react";
 import { redirect } from "next/navigation";
 import { parse } from "@/lib/helper";
+import { GoogleAuthButton } from "../base-components/google-auth-button/GoogleAuthButton";
 
 export default function Login() {
   const [formData, setFormData] = useState({
@@ -76,7 +77,7 @@ export default function Login() {
         {/* Right Column with Form */}
         <form
           onSubmit={handleSubmit}
-          className="w-full p-3 md:p-6 border border-gray-300"
+          className="w-full p-3 md:p-6 border border-gray-300 rounded"
         >
           <h2 className="text-2xl font-bold mb-6 text-gray-800">Login</h2>
 
@@ -87,7 +88,7 @@ export default function Login() {
             <input
               type="email"
               name="email"
-              className="w-full px-4 py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-neutral-500"
+              className="rounded w-full px-4 py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-neutral-500"
               value={formData.email}
               onChange={handleChange}
               required
@@ -101,7 +102,7 @@ export default function Login() {
             <input
               type="password"
               name="password"
-              className="w-full px-4 py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-neutral-500"
+              className="rounded w-full px-4 py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-neutral-500"
               value={formData.password}
               onChange={handleChange}
               required
@@ -127,12 +128,13 @@ export default function Login() {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-neutral-600 text-white py-2 hover:bg-neutral-700 transition-colors duration-200"
+            className="w-full rounded bg-neutral-600 text-white py-2 hover:bg-neutral-700 transition-colors duration-200"
           >
             {isLoading ? "Logging in..." : "Login"}
           </button>
 
-          <p className="mt-6 text-sm text-gray-600">
+          <GoogleAuthButton />
+          <p className=" text-sm text-gray-600">
             Don’t have an account?{" "}
             <a
               href="/register"

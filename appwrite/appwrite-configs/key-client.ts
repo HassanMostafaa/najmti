@@ -2,7 +2,7 @@ import { Client } from "node-appwrite";
 
 const keyClient = new Client();
 keyClient
-  .setEndpoint("https://fra.cloud.appwrite.io/v1")
-  .setProject("68250a6e0006861eb428")
-  .setKey(process.env.APP_WRITE_API_KEY || "");
+  .setEndpoint(process.env.NEXT_PUBLIC_APP_WRITE_API_ENDPOINT ?? "")
+  .setProject(process.env.NEXT_PUBLIC_APP_WRITE_PROJECT_ID ?? "")
+  .setKey(process.env.APPWRITE_API_KEY || "");
 export default keyClient;

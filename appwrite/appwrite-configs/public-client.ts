@@ -2,6 +2,6 @@ import { Client } from "appwrite";
 
 const client = new Client();
 client
-  .setEndpoint("https://fra.cloud.appwrite.io/v1")
-  .setProject("68250a6e0006861eb428");
+  .setEndpoint(process.env?.NEXT_PUBLIC_APP_WRITE_API_ENDPOINT ?? "")
+  .setProject(process.env.NEXT_PUBLIC_APP_WRITE_PROJECT_ID ?? "");
 export default client;

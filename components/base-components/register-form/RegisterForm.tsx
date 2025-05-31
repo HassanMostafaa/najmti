@@ -1,9 +1,13 @@
 "use client";
 import React, { useState } from "react";
-import { useMutation } from "react-query";
-import axios from "axios";
-import { registerUser } from "./registerHelper";
+
 import { InputField } from "./InputField"; // adjust path as needed
+import { Account, ID } from "appwrite";
+import { Databases } from "node-appwrite";
+import client from "@/appwrite/appwrite-configs/public-client";
+import keyClient from "@/appwrite/appwrite-configs/key-client";
+import { useSessionStore } from "@/stores/useSessionStore";
+import { useRouter } from "next/navigation";
 
 export const RegisterForm = () => {
   const [formError, setFormError] = useState<string | null>(null);
@@ -12,47 +16,76 @@ export const RegisterForm = () => {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const { loginWithAppwrite } = useSessionStore();
 
   const isFullNameValid = fullName.trim().length >= 3;
   const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   const isPasswordValid = password.length > 4;
+  const account = new Account(client);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const databases = new Databases(keyClient as any);
+  const router = useRouter();
 
-  const mutation = useMutation({
-    mutationFn: registerUser,
-    onSuccess: () => {
-      setSuccessMessage("Registration successful!");
-
-      setFormError(null);
-      // clearFields();
-    },
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    onError: (error: any) => {
-      if (axios.isAxiosError(error)) {
-        const status = error.response?.data?.error?.code;
-        if (status === 409) {
-          setFormError("Email is already registered.");
-        } else if (status === 400) {
-          setFormError("Invalid input. Please check your data.");
-        } else {
-          setFormError("Something went wrong. Please try again.");
-        }
-      } else {
-        setFormError("Unexpected error. Please try again.");
-      }
-    },
-  });
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setFormError(null);
-    setSuccessMessage(null);
 
-    if (!fullName || !email || !password) {
-      setFormError("Please fill out all fields.");
-      return;
+    console.log("Form submitted with values:", {
+      fullName,
+      email,
+      password,
+    });
+    try {
+      setIsLoading(true);
+      let registerProcess: boolean = true;
+      const newId = ID.unique();
+
+      const res_main_db = await databases.createDocument(
+        process.env.NEXT_PUBLIC_APP_WRITE_MAIN_DB_ID ?? "",
+        process.env.NEXT_PUBLIC_APP_WRITE_USERS_COLLECTION_ID ?? "",
+        newId,
+        { email, name: fullName }
+      );
+      if (!res_main_db.$id) {
+        registerProcess = false;
+        return;
+      }
+
+      const res_auth_db = await account.create(
+        newId,
+        email,
+        password,
+        fullName
+      );
+
+      if (!res_auth_db.$id) {
+        registerProcess = false;
+        return;
+      }
+      const session = await account.createEmailPasswordSession(email, password);
+      const currentUser = await account.get();
+
+      if (registerProcess) {
+        loginWithAppwrite({
+          session,
+          currentUser,
+        });
+        setSuccessMessage("Registration successful! You can now log in.");
+        setFormError(null);
+        setFullName("");
+        setEmail("");
+        setPassword("");
+        router.push("/feed");
+      }
+    } catch (error) {
+      console.error("❌ Registration failed:", error);
+      setFormError(
+        error instanceof Error ? error.message : "An unexpected error occurred"
+      );
+      setSuccessMessage(null);
+    } finally {
+      setIsLoading(false);
     }
-
-    mutation.mutate({ email, password, fullName });
   };
 
   return (
@@ -105,10 +138,10 @@ export const RegisterForm = () => {
       >
         <button
           type="submit"
-          disabled={!isPasswordValid || mutation.isLoading}
+          disabled={!isPasswordValid || isLoading}
           className="w-full py-2 bg-neutral-900 hover:bg-neutral-700 text-white font-semibold transition duration-200 disabled:opacity-50"
         >
-          {mutation.isLoading ? "Registering..." : "Register"}
+          {isLoading ? "Registering..." : "Register"}
         </button>
       </div>
 
